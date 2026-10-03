@@ -1,0 +1,36 @@
+/******* sec1 tablet - 768px *******/
+@media (min-width: 768px) {
+    .board-section {
+        padding-top: 2rem;
+    }
+
+    .task-card {
+        padding: 1.25rem;
+    }
+
+    .column-title {
+        font-size: 1.1rem;
+    }
+}
+
+/******* sec2 desktop - 992px *******/
+@media (min-width: 992px) {
+    .board-section {
+        padding-top: 2.5rem;
+    }
+
+    .column-header {
+        padding: 1rem 0.5rem 1.5rem;
+    }
+
+    .task-desc {
+        -webkit-line-clamp: 3;
+    }
+}
+
+/******* sec3 large desktop - 1200px *******/
+@media (min-width: 1200px) {
+    .task-card {
+        padding: 1.4rem;
+    }
+}

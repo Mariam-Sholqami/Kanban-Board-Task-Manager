@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban - Task Board</title>
+
+    <!-- fav icon -->
+    <link rel="shortcut icon" href="images/kanban-icon.png">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- css bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- media query -->
+    <link rel="stylesheet" href="css/media.css">
+</head>
+
+<body>
+
+    <!-- start navbar -->
+    <nav class="navbar kanban-navbar">
+        <div class="container-fluid container-xl">
+            <div class="d-flex align-items-center gap-2">
+                <div class="logo-icon rounded-3 d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-table-columns text-white"></i>
+                </div>
+                <h1 class="fs-4 fw-bold m-0 text-white">Kanban</h1>
+            </div>
+            <button id="addTaskBtn" type="button" class="add-task-btn border-0 rounded-3 d-flex align-items-center justify-content-center"
+                data-bs-toggle="modal" data-bs-target="#taskModal">
+                <i class="fa-solid fa-plus text-white"></i>
+            </button>
+        </div>
+    </nav>
+    <!-- end navbar -->
+
+    <!-- start toast -->
+    <div class="app-toast d-none" id="appToast">
+        <span id="appToastMessage"></span>
+    </div>
+    <!-- end toast -->
+
+    <!-- start board -->
+    <main class="board-section">
+        <div class="container-fluid container-xl">
+            <div class="row g-3 g-md-4">
+
+                <!-- start todo column -->
+                <div class="col-12 col-lg-4">
+                    <div class="board-column todo-column">
+                        <div class="column-header d-flex align-items-center gap-2">
+                            <div class="column-icon icon-todo rounded-3 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                            <div>
+                                <h2 class="column-title m-0">To Do</h2>
+                                <p class="column-count m-0" id="todoCount">0 tasks</p>
+                            </div>
+                        </div>
+
+                        <div class="column-body">
+                            <div class="empty-state" id="todoEmpty">
+                                <i class="fa-regular fa-folder-open"></i>
+                                <p>No tasks yet</p>
+                                <p class="empty-hint">Click + to add one</p>
+                            </div>
+
+                            <div class="task-list" id="todoList">
+
+                            <!-- start task card sample : low priority / todo -->
+                            <!-- <div class="task-card" data-status="todo" data-priority="low">
+                                <div class="card-hover-actions">
+                                    <button onclick="editTask(0)" class="icon-btn btn-edit" title="Edit" data-bs-toggle="modal" data-bs-target="#taskModal"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="deleteTask(0)" class="icon-btn btn-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="task-id">
+                                    <span class="status-dot dot-neutral"></span>#003
+                                </div>
+                                <h3 class="task-title">Aut odio cupidatat v</h3>
+                                <p class="task-desc">Corrupti dolorum autem sunt enim voluptate id commodo minus nisi et voluptates quia sit...</p>
+                                <div class="badge-row">
+                                    <span class="badge-priority badge-low"><span class="dot"></span>LOW</span>
+                                </div>
+                                <div class="task-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>Jan 22</span>
+                                    <span><i class="fa-regular fa-clock"></i>Just now</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button onclick="startTask(0)" class="btn-task btn-start"><i class="fa-solid fa-play"></i>Start</button>
+                                    <button onclick="completeTask(0)" class="btn-task btn-complete"><i class="fa-solid fa-check"></i>Complete</button>
+                                </div>
+                            </div> -->
+                            <!-- end task card sample -->
+
+                            <!-- start task card sample : high priority / due soon -->
+                            <!-- <div class="task-card" data-status="todo" data-priority="high">
+                                <div class="card-hover-actions">
+                                    <button onclick="editTask(1)" class="icon-btn btn-edit" title="Edit" data-bs-toggle="modal" data-bs-target="#taskModal"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="deleteTask(1)" class="icon-btn btn-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="task-id">
+                                    <span class="status-dot dot-neutral"></span>#004
+                                </div>
+                                <h3 class="task-title">WREW</h3>
+                                <div class="badge-row">
+                                    <span class="badge-priority badge-high"><span class="dot"></span>HIGH PRIORITY</span>
+                                    <span class="badge-due">DUE SOON</span>
+                                </div>
+                                <div class="task-meta">
+                                    <span class="text-due"><i class="fa-regular fa-calendar"></i>Sep 29</span>
+                                    <span><i class="fa-regular fa-clock"></i>Just now</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button onclick="startTask(1)" class="btn-task btn-start"><i class="fa-solid fa-play"></i>Start</button>
+                                    <button onclick="completeTask(1)" class="btn-task btn-complete"><i class="fa-solid fa-check"></i>Complete</button>
+                                </div>
+                            </div> -->
+                            <!-- end task card sample -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end todo column -->
+
+                <!-- start in-progress column -->
+                <div class="col-12 col-lg-4">
+                    <div class="board-column progress-column">
+                        <div class="column-header d-flex align-items-center gap-2">
+                            <div class="column-icon icon-progress rounded-3 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-spinner"></i>
+                            </div>
+                            <div>
+                                <h2 class="column-title m-0">In Progress</h2>
+                                <p class="column-count m-0" id="progressCount">0 tasks</p>
+                            </div>
+                        </div>
+
+                        <div class="column-body">
+                            <div class="empty-state" id="progressEmpty">
+                                <i class="fa-regular fa-folder-open"></i>
+                                <p>No tasks yet</p>
+                                <p class="empty-hint">Click + to add one</p>
+                            </div>
+
+                            <div class="task-list" id="progressList">
+
+                            <!-- start task card sample : medium priority / in progress -->
+                            <!-- <div class="task-card" data-status="progress" data-priority="medium">
+                                <div class="card-hover-actions">
+                                    <button onclick="editTask(2)" class="icon-btn btn-edit" title="Edit" data-bs-toggle="modal" data-bs-target="#taskModal"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="deleteTask(2)" class="icon-btn btn-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="task-id">
+                                    <span class="status-dot dot-progress"></span>#002
+                                </div>
+                                <h3 class="task-title">Et sed enim ut offic</h3>
+                                <p class="task-desc">Nam vero non ea alias qui occaecat saepe obcaecati corrupti harum dolor</p>
+                                <div class="badge-row">
+                                    <span class="badge-priority badge-medium"><span class="dot"></span>MEDIUM</span>
+                                </div>
+                                <div class="task-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>Apr 15</span>
+                                    <span><i class="fa-regular fa-clock"></i>1m ago</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button onclick="revertTask(2)" class="btn-task btn-todo"><i class="fa-solid fa-rotate-left"></i>To Do</button>
+                                    <button onclick="completeTask(2)" class="btn-task btn-complete"><i class="fa-solid fa-check"></i>Complete</button>
+                                </div>
+                            </div> -->
+                            <!-- end task card sample -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end in-progress column -->
+
+                <!-- start completed column -->
+                <div class="col-12 col-lg-4">
+                    <div class="board-column completed-column">
+                        <div class="column-header d-flex align-items-center gap-2">
+                            <div class="column-icon icon-completed rounded-3 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div>
+                                <h2 class="column-title m-0">Completed</h2>
+                                <p class="column-count m-0" id="completedCount">0 tasks</p>
+                            </div>
+                        </div>
+
+                        <div class="column-body">
+                            <div class="empty-state" id="completedEmpty">
+                                <i class="fa-regular fa-folder-open"></i>
+                                <p>No tasks yet</p>
+                                <p class="empty-hint">Click + to add one</p>
+                            </div>
+
+                            <div class="task-list" id="completedList">
+
+                            <!-- start task card sample : done -->
+                            <!-- <div class="task-card" data-status="completed" data-priority="low">
+                                <div class="card-hover-actions">
+                                    <button onclick="editTask(3)" class="icon-btn btn-edit" title="Edit" data-bs-toggle="modal" data-bs-target="#taskModal"><i class="fa-solid fa-pen"></i></button>
+                                    <button onclick="deleteTask(3)" class="icon-btn btn-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="task-id">
+                                    <span class="status-dot dot-completed"></span>#001
+                                </div>
+                                <h3 class="task-title task-title-done">ffsas</h3>
+                                <p class="task-desc">fdgewgew</p>
+                                <div class="badge-row">
+                                    <span class="badge-priority badge-low"><span class="dot"></span>LOW</span>
+                                    <span class="badge-done"><i class="fa-solid fa-check"></i>DONE</span>
+                                </div>
+                                <div class="task-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>Sep 30</span>
+                                    <span><i class="fa-regular fa-clock"></i>1m ago</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button onclick="revertTask(3)" class="btn-task btn-todo"><i class="fa-solid fa-rotate-left"></i>To Do</button>
+                                    <button onclick="startTask(3)" class="btn-task btn-start"><i class="fa-solid fa-play"></i>Start</button>
+                                </div>
+                            </div> -->
+                            <!-- end task card sample -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end completed column -->
+
+            </div>
+        </div>
+    </main>
+    <!-- end board -->
+
+    <!-- start create/edit task modal -->
+    <div class="modal fade" id="taskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content task-modal-content">
+                <div class="modal-header border-0 d-flex justify-content-between">
+                    <h1 class="modal-title modal-title-kanban" id="taskModalLabel">Create New Task</h1>
+                    <button type="button" class="modal-close-btn border-0" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body pt-1">
+                    <form id="taskForm">
+                        <div class="mb-3">
+                            <label for="taskTitle" class="form-label field-label"><i class="fa-solid fa-heading"></i>Task
+                                Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control task-input" id="taskTitle"
+                                placeholder="What needs to be done?">
+                            <p class="field-error d-none" id="titleError"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <label for="taskPriority" class="form-label field-label"><i
+                                        class="fa-solid fa-flag"></i>Priority</label>
+                                <select class="form-select task-input" id="taskPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                                <label for="taskDueDate" class="form-label field-label"><i
+                                        class="fa-regular fa-calendar"></i>Due Date</label>
+                                <input type="date" class="form-control task-input" id="taskDueDate">
+                                <p class="field-error d-none" id="dueDateError"></p>
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label for="taskDescription" class="form-label field-label"><i
+                                    class="fa-solid fa-align-left"></i>Description</label>
+                            <textarea class="form-control task-input" id="taskDescription" rows="4" maxlength="500"
+                                placeholder="Add more details about this task..."></textarea>
+                            <p class="char-count text-end m-0"><span id="descCount">0</span>/500</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-task btn-cancel flex-fill" data-bs-dismiss="modal">Cancel</button>
+                    <button id="saveTaskBtn" type="button" class="btn-task btn-add flex-fill"><i
+                            class="fa-solid fa-plus"></i>Add Task</button>
+                    <button id="updateTaskBtn" type="button" class="btn-task btn-add flex-fill d-none"><i
+                            class="fa-solid fa-floppy-disk"></i>Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end create/edit task modal -->
+
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <!-- main js -->
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
